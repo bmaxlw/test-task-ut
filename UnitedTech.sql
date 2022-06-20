@@ -47,7 +47,7 @@ WHERE TestType = 1
 
 
 -- Task #4:
--- "на підзапит" <- where a subquery supposed to be used ???
+-- (?) where a subquery supposed to be used (?)
 SELECT userId,
        SUM(PriceAmount * ExchangeCurrencyRate) TotalPerUser
 FROM Payments
