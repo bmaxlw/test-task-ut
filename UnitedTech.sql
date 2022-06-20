@@ -5,8 +5,8 @@
 SELECT [Date],
        COUNT(DISTINCT userId) RealUsers
 FROM registration
--- <WHERE> here works with <GROUP BY> since it filters 
--- the <SELECT> stmt and not <GROUP BY> itself
+-- <WHERE> works with <GROUP BY> in this case since it filters 
+-- the <SELECT> statement and not <GROUP BY> itself
 WHERE TestType = 1 
       AND CAST([Date] AS NVARCHAR)
       BETWEEN '2022-01-01' AND '2022-04-31'
@@ -33,3 +33,12 @@ WHERE TestType = 1
       AND TransactionStatus = 2
       AND CAST([Date] AS NVARCHAR)
       BETWEEN '2021-01-01' AND '2021-12-31';
+
+-- Task #3:
+SELECT DISTINCT
+    Country,
+    SUM(PriceAmount * ExchangeCurrencyRate) OVER (PARTITION BY Country) TotalsUSD
+FROM Payments
+WHERE TestType = 1
+      AND TransactionStatus = 2
+      AND Country IN ( 'US', 'GB', 'MX', 'CA', 'PL' );
