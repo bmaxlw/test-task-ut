@@ -14,7 +14,7 @@ WHERE TestType = 1
 GROUP BY [Date];
 
 -- If partition needed both by dates and by countries
-SELECT [Date],
+SELECT DISTINCT [Date],
        Country,
        COUNT(userId) OVER (PARTITION BY [Date], Country) RealUsers
 FROM registration
@@ -23,3 +23,13 @@ WHERE TestType = 1
       BETWEEN '2022-01-01' AND '2022-04-31'
       AND Country IN ( 'US', 'GB', 'MX', 'CA', 'IE' )
 ORDER BY [Date]
+
+-- Task #2:
+SELECT DISTINCT
+    [Date],
+    SUM(PriceAmount) OVER (PARTITION BY ([Date])) TotalAmount
+FROM Payments
+WHERE TestType = 1
+      AND TransactionStatus = 2
+      AND CAST([Date] AS NVARCHAR)
+      BETWEEN '2021-01-01' AND '2021-12-31';
